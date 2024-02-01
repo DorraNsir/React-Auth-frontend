@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 
 export default function Nav() {
   const { name, setName } = useContext(UserContext);
+  
   useEffect(() => {
     console.log('Login name from logout:', name);
   }, [name]);
@@ -24,39 +25,31 @@ export default function Nav() {
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
-            Home
-          </Link>
+    <div className="">
+    <div className="antialiased bg-gray-100 dark-mode:bg-gray-900">
+      <div className="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
+        <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
+          <div className="flex flex-row items-center justify-between p-4">
+            <Link to="/" className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
+              Flowtrail UI
+            </Link>
 
-          <div className="collapse navbar-collapse" id="navbarCollapse">
-            {name === '' || name===undefined ? (
-              <ul className="navbar-nav me-auto mb-2 mb-md-0">
-                <li className="nav-item">
-                  <Link className="nav-link active" to="/login">
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link active" to="/register">
-                    Register
-                  </Link>
-                </li>
-              </ul>
-            ) : (
-              <ul className="navbar-nav me-auto mb-2 mb-md-0">
-                <li className="nav-item">
-                  <Link className="nav-link active" to="/login" onClick={logout}>
-                    Logout
-                  </Link>
-                </li>
-              </ul>
-            )}
           </div>
+          <nav className=''>
+            {/* Navigation links */}
+            {name === '' || name===undefined ? (
+            <><Link class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" to="/">Home</Link>
+            <Link class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" to="/login">Login</Link>
+            <Link class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" to="/register">Register</Link>
+            </>
+            ) : (
+
+            <Link onClick={logout} class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" to="/login">Logout</Link>
+            )}
+          </nav>
         </div>
-      </nav>
+      </div>
     </div>
+  </div>
   );
 }
