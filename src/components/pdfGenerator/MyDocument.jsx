@@ -53,6 +53,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginTop:8,
   },
+  listItem: {
+    marginBottom: 5,
+  },
+  listItemContent: {
+    marginLeft: 10,
+    fontSize: 10,
+    marginBottom: 8,
+    marginTop:8, // Adjust as needed
+  },
 });
 
 const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schooldescription,school,aboutMe,skills,projectName,ProjectDescription,projects}) => (
@@ -67,13 +76,13 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
 
         <Text style={styles.leftColumnTitle}>Skills</Text>
 
-        <ol> 
-  {skills.map((s, index) => (
-    <li key={index}>
-      <Text style={styles.leftColumnContent}>{s}</Text>
-    </li>
-  ))}
-</ol>
+        
+        <View style={styles.listItem}>
+        {skills.map((s, index) => (
+          <Text key={index} style={styles.listItemContent}>•  {s}</Text>
+          ))}
+        </View>
+        
         </View>
         <View style={styles.rightColumn}>
           <Text style={styles.header}>{firstName} {lastName}</Text>
