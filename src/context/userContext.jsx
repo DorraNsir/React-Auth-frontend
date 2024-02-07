@@ -4,6 +4,8 @@ import { createContext } from 'react'
 export const UserContext = createContext()
 export const UserProvider = ({ children }) => {
     const [name,setName]=useState('');
+    const [lastname,setLastname]=useState('');
+
 
     useEffect(()=>{
       (
@@ -16,12 +18,13 @@ export const UserProvider = ({ children }) => {
               });
               const content = await respose.json();
               setName(content.name);
+              setLastname(content.lastname)
         } 
   
       )();
     });
     return (
-        <UserContext.Provider value={{ name,setName }} >
+        <UserContext.Provider value={{ name,setName,lastname }} >
           {children}
         </UserContext.Provider>
       )

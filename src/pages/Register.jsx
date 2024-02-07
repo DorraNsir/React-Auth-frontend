@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom';
 
 export default function Register() {
-
     const[name,setName]=useState('')
     const[lastname,setLastname]=useState('')
     const[email,setEmail]=useState('')
@@ -19,6 +18,7 @@ export default function Register() {
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
                 name,
+                lastname,
                 email,
                 password
             })
