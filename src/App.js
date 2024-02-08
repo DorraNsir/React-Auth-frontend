@@ -27,7 +27,7 @@ function App() {
               <Route path='/home'  element={<Home/>}/>
               <Route path='/login' element={<Login/>}/>
               <Route path='/register' element={<Register/>}/>
-              
+              <Route path='/pdfViewer' element={<PdfViewer/> }/>
           </Routes>
         
       
@@ -35,7 +35,6 @@ function App() {
       {/* <Login/> */}
       {/* <LandingPage/> */}
       {/* <Footer/> */}
-      {/* <PdfViewer/> */}
       
     </div>
   );
