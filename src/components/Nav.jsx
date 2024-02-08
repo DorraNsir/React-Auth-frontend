@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
+import { VscAccount } from "react-icons/vsc";
 
 export default function Nav() {
   const { name, setName } = useContext(UserContext);
   
-  // useEffect(() => {
-  //   console.log('Login name from logout:', name);
-  // }, [name]);
-
-
+  
   const logout = async () => {
     try {
       await fetch('http://localhost:8000/api/logout', {
@@ -43,8 +40,14 @@ export default function Nav() {
             <Link className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" to="/register">Register</Link>
             </>
             ) : (
-
+            <div className="flex justify-around flex-row-reverse">
+              <div className='flex flex-col '>
+              <VscAccount className='w-9 mx-10 '/>
+              <h1 className=''>{name}</h1>
+              </div>
             <Link onClick={logout} className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" to="/login">Logout</Link>
+            
+            </div>
             )}
           </nav>
         </div>

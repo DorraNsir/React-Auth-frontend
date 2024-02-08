@@ -1,21 +1,98 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import Footer from '../components/Footer';
-import TextCom from '../components/TextCom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import TextCom from '../components/TextCom'
+
+
+
 export default function LandingPage() {
-
-  // const CheckTokenExists = async () => {
-  //     const response =await fetch('http://localhost:8000/api/check', {
-  //       method: 'GET',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       credentials: 'include',
-  //     });
-  //     if()
-
-    
-  // };
+  const [checkLog,setCheckLog]=useState(false)
+  const cookies = new Cookies();
+ const cookie =cookies.get('jwt')
+ console.log(cookie)
+  const nav = useNavigate();
+  const handleCreateCVClick = () => {
+    if (!cookie ) {
+      setCheckLog(true)
+    } else {
+      // User is not logged in, navigate to login page
+      nav('/home');
+    }
+  };
+  
   return (
 <>
+
+{checkLog && 
+      <div
+      className="font-sans
+        bg-red-500
+         bg-opacity-10
+        w-full
+        min-h-screen
+        flex justify-center  items-center
+        h-full 
+        top-0
+        backdrop-filter backdrop-blur-lg
+        absolute
+    "
+    >
+      <div
+        className="
+          px-6
+            p-8
+            bg-white
+            absolute
+            justify-center
+            items-center
+            m-auto 
+            mx-auto
+            h-1/3
+            sm:h-1/3
+            md:w-1/3
+            md:h-1/3
+            lg: mx-5
+            lg:h-1/3
+            rounded-3xl
+            filter
+            drop-shadow-2xl
+        "
+      >
+        <div className="flex p-1 sm:mt-4 border-black items-center ">
+          <div className="flex">
+          <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black">
+            You are not logged!..
+            <p>Please login</p>
+          </h1>
+          </div>
+        </div>
+        <div className="justify-center flex-col items-center mt-2 sm:mt-8 flex">
+          <Link to={'/login'}
+            className="
+                    bg-blue-600
+                    text-gray-100
+                    rounded-md
+                    h-8
+                    sm:h-auto
+                    sm:rounded-lg
+                    w-20
+                    sm:w-52
+                    p-1
+                    text-xs
+                    sm:text-md
+                    sm:p-3
+                    m-3
+                    items-center
+                    
+                "
+          >
+            Login
+          </Link>
+        </div>
+      </div>
+    </div>  
+}
     <section className="relative  bg-blueGray-50">
     <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
             <div className="absolute top-0 w-full h-full bg-center bg-cover"
@@ -23,8 +100,8 @@ export default function LandingPage() {
                     backgroundImage: "url('https://cdn.discordapp.com/attachments/1138848747665768499/1202924542360821820/landingImage.png?ex=65cf39c8&is=65bcc4c8&hm=1b99058f59c8fe4c22ed916af1636f203ce951db40ac67e195b70f7de3516fe5&')",
                   }}>
               <span id="blackOverlay" className="w-full h-full absolute opacity-70 bg-black"></span>
-
             </div> 
+            
             <div className="container relative mx-auto">
               <div className="items-center flex flex-wrap">
                 <div className="w-full lg:w-8/12 px- ml-auto mr-auto text-center">
@@ -39,7 +116,7 @@ export default function LandingPage() {
               <button className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow my-3">
                 <div className="absolute inset-0 w-3 bg-slate-400 transition-all duration-[250ms] ease-out group-hover:w-full" />
                 <span className="relative text-black group-hover:text-white">
-                  <Link to ='/login' >Create CV</Link>
+                  <span onClick={handleCreateCVClick} >Create CV</span>
                 </span>
               </button>
             

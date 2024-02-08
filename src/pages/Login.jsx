@@ -1,22 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
-// import { Navigate } from 'react-router-dom';
-import { UserContext } from '../context/userContext';
-import { useNavigate } from "react-router-dom";
+import React, { useState} from 'react';
+import { Link, useNavigate } from "react-router-dom";
+
 
 export default function Login() {
-  const { name, setName } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [navigate, setNavigate] = useState(false);
  
-  // useEffect(() => {
-  //   console.log('Login name:', name);
-  // }, [name])
+
+
   const nav = useNavigate();
   const submit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:8000/api/login', {
+    await fetch('http://localhost:8000/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -25,15 +22,11 @@ export default function Login() {
         password,
       }),
     });
-    const content = await response.json();
-    setName(content.name);
     setNavigate(true);
   };
-
   if (navigate) {
     nav(0)
-    nav('/')
-    
+    nav('/home')
   }
 
   return (
@@ -91,14 +84,14 @@ export default function Login() {
       </form>
     </div>
     <div className="flex justify-center items-center mt-6">
-      <a href="/" target="_blank" className="inline-flex items-center font-bold text-blue-500 hover:text-blue-700 text-xs text-center">
+      <Link to="/register" target="_blank" className="inline-flex items-center font-bold text-blue-500 hover:text-blue-700 text-xs text-center">
         <span>
           <svg className="h-6 w-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
             <path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
           </svg>
         </span>
-        <span className="ml-2">You don't have an account?</span>
-      </a>
+        <span className="ml-2" >You don't have an account?</span>
+      </Link>
     </div>
   </div>
 </div>
