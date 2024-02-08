@@ -186,9 +186,6 @@ const FormComponent = ({projects, ProjectDescription,projectName, skills, skill,
     <div className=" preview flex   w-1/2 overflow-hidden ">
     
         <div className="preview  fixed  ">
-
-          
-  
         <PDFViewer style={{width: '100vh',height: '100vh',border: '2px solid #bbb1b1',borderRadius: '8px',}}>
           <MyDocument firstName={firstName} lastName={lastName} Eaddress={Eaddress} phoneN={phoneN} dateG={dateG} 
           degree={degree} Schooldescription={Schooldescription} school={school} aboutMe={aboutMe}

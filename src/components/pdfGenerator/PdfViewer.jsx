@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import FormComponent from './FormComponent'
 import MyDocument from './MyDocument';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-
+import Cookies from 'universal-cookie';
+import { Link } from 'react-router-dom';
 
 const PdfViewer= React.memo(()=> {
 
@@ -80,8 +81,24 @@ const PdfViewer= React.memo(()=> {
     setEaddress(e.target.value);
   };
   // Add more event handlers as needed
+  const cookies = new Cookies();
+  const cookie = cookies.get('jwt');
+
   return (
     <div>
+      {
+           !cookie &&(
+              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div className="bg-white p-8 rounded-lg shadow-md flex flex-col">
+                  <h2 className="text-2xl font-bold mb-4">Login Required</h2>
+                  <p className="text-gray-600 mb-4">Please login to continue.</p>
+                  <Link to="/login" className="bg-slate-500 text-white px-4 py-2 rounded-md hover:bg-slate-700 text-center">
+                    Login
+                  </Link>
+                </div>
+              </div>)
+      }
+
             <div className="form-container">
         <FormComponent
           firstName={firstName}
