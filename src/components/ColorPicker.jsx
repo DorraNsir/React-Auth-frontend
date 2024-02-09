@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 
 export default function ColorPicker({onColorChange}) {
-    const[color,setColor]=useState("#000000")
+    const[color,setColor]=useState("#7c6ed5")
     const handelColorChange=(e)=>{
         setColor(e.target.value)
         onColorChange(e.target.value);
