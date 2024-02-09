@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import LandingPage from './pages/LandingPage';
 import Footer from './components/Footer';
 import PdfViewer from './components/pdfGenerator/PdfViewer';
+import TemplatesPage from './pages/TemplatesPage';
 
 // const routes=useRoutes([
 //   {
@@ -28,6 +29,8 @@ function App() {
               <Route path='/login' element={<Login/>}/>
               <Route path='/register' element={<Register/>}/>
               <Route path='/pdfViewer' element={<PdfViewer/> }/>
+              <Route path='/templates' element={<TemplatesPage/> }/>
+              
           </Routes>
         
       
