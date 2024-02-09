@@ -1,10 +1,11 @@
 // FormComponent.js
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import MyDocument from './MyDocument';
 import { PDFViewer } from '@react-pdf/renderer';
 import { IoAddOutline } from "react-icons/io5";
 import ColorPicker from '../ColorPicker';
 import { MdDeleteForever } from "react-icons/md";
+// import PopupDelete from '../PopupDelete';
 
 const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName, lastName, phoneN, Eaddress, onFirstNameChange,
    onLastNameChange, handlePhoneChange, handleEaddressChange,handleaboutMeChange,
@@ -12,23 +13,35 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
     
     const [color, setColor] = useState("#7c6ed5");
     const [skills, setSkills] = useState([""]);
-    const[ProjectDescription,setProjectDescription]=useState('')
-    const[projectName,setProjectName]=useState('')
     const[projects,setProjects]=useState([
       {
         name:'',
         description:'',
       }
     ])
-    const handleAddProject = () => {
-      if (projectName.trim() !== "" && ProjectDescription.trim() !== "") { 
-        const newProject = { name: projectName, description: ProjectDescription };
-        setProjects([...projects, newProject]); 
-        setProjectName('');
-        setProjectDescription(''); 
-      }
+    const addInputProjucts = () => {
+      const newProject = { name: "", description: "" };
+      setProjects([...projects, newProject]);
     };
-
+    const handleProjectNameChange = (index, value) => {
+      const newProject=[...projects]
+      newProject[index]={...newProject[index], name: value };
+        setProjects(newProject); 
+        console.log(projects)
+    };
+    const handleProjectDescriptionChange = (index, value) => {
+      const newProject=[...projects]
+      newProject[index]={...newProject[index], description: value };
+        setProjects(newProject); 
+    };
+    const deleteInputProjects = (index) => {
+      // Make a copy of the inputs array
+      const Projects = [...projects];
+      // Remove the item at the specified index using splice
+      Projects.splice(index, 1);
+      // Update the state with the modified Inputs array
+      setProjects(Projects)
+    }
     const deleteInputSkills = (index) => {
       // Make a copy of the inputs array
       const Skills = [...skills];
@@ -36,14 +49,16 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
       Skills.splice(index, 1);
       // Update the state with the modified Inputs array
       setSkills(Skills);
+
     }
-    const addInput = () => {
+    const addInputSkills = () => {
       setSkills([...skills, '']);
     };
     const handleSkillsChange = (index, value) => {
       const newSkills = [...skills];
       newSkills[index] = value;
-      setSkills(newSkills);  
+      setSkills(newSkills); 
+      console.log("lenghth",skills.length) 
     };
     const handleColorChange = (Ncolor) => {
       setColor(Ncolor)
@@ -185,11 +200,9 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
         </form>
       </div>
     ))}
-
-
   <div className=" flex my-3 ">
-        <IoAddOutline  className='my-3 cursor-pointer ' />
-        <span className='m-2 cursor-pointer font-bold text-gray-600 hover:text-green-800 hover:font-bold' onClick={addInput}>Add more skills </span>
+        <IoAddOutline onClick={addInputSkills} className='my-3 cursor-pointer ' />
+        <span className='m-2 cursor-pointer font-bold text-gray-600 hover:text-green-800 hover:font-bold' onClick={addInputSkills}>Add more skills </span>
         </div>
 </div>
 {/* *************Work experience*************** */}
@@ -205,30 +218,35 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
     Mention all your projects 
         </p>
   </div>
-
-  <div className="mt-1 sm:mt-8">
+  {projects.map((input,index)=>(
+  <div className="mt-1 sm:mt-8" key={index}>
     <form action="" className="flex-col flex">
 
     <label htmlFor="lastname"
         className="text-gray-700 mt-1 sm:mt-5 text-xs sm:text-md">
         Project name
       </label>
+      <div className='flex items-end justify-end'>
+            <MdDeleteForever onClick={()=>deleteInputProjects(index)} className='relative top-5 cursor-pointer hover:bg-red-400' />
+      </div> 
       <input name="lastname" type="text"
-      value={""} onChange={""}
+      value={input.name} onChange={(e)=>handleProjectNameChange(index,e.target.value)}
         className="w-full h-4 sm:h-9 border-b-2 border-gray-300 focus:border-blue-300 outline-none"/>
             <label htmlFor="lastname"
         className="text-gray-700 mt-1 sm:mt-5 text-xs sm:text-md">
         Describe your project
       </label>
             <textarea className="my-4 border-2 border-gray-300 w-full  rounded-xl outline-none" 
-            value={""} onChange={""}
+            value={input.description} onChange={(e)=>handleProjectDescriptionChange(index,e.target.value)}
             name="" id="" cols="30" rows="5"></textarea>
-        <div className=" flex my-3 ">
-        <IoAddOutline onClick={''} className='my-3 cursor-pointer ' />
-        <span className='m-2'>Add more Work experience </span>
-        </div>
     </form>
   </div>
+  ))}
+        <div className=" flex my-3 ">
+          <IoAddOutline onClick={addInputProjucts} className='my-3 cursor-pointer ' />
+          <span className='m-2 cursor-pointer font-bold text-gray-600 hover:text-green-800 hover:font-bold' onClick={addInputProjucts}>Add more Work experience </span>
+        </div>
+
 </div>
 </div>
 
@@ -238,14 +256,13 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
         <PDFViewer style={{width: '100vh',height: '100vh',border: '2px solid #bbb1b1',borderRadius: '8px',}}>
           <MyDocument firstName={firstName} lastName={lastName} Eaddress={Eaddress} phoneN={phoneN} dateG={dateG} 
           degree={degree} Schooldescription={Schooldescription} school={school} aboutMe={aboutMe} 
-          skills={skills}  color={color}
-           />
+          skills={skills}  color={color} projects={projects} />
         </PDFViewer>
 
         
   </div>  
   </div> 
-    
+  {/* <PopupDelete/> */}
     </div>
   );
 

@@ -68,12 +68,23 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
       <Page size="A4" style={styles.page}>
         <View style={styles.container} >
           <View style={styles.leftColumn}>
+          {phoneN !== ""||Eaddress !== "" ? (
             <Text style={styles.leftColumnTitle}>Personal Information</Text>
-            <Text style={styles.leftColumnContent}>Phone: {phoneN}</Text>
-            <Text style={styles.leftColumnContent}>Email: {Eaddress} </Text>
+            ):null}
+            {phoneN !== "" && (
+            <Text style={styles.leftColumnContent}>Phone:</Text>
+            )}
+            <Text style={styles.leftColumnContent}>{phoneN}</Text>
 
-            <Text style={styles.leftColumnTitle}>Skills</Text>
-
+          
+            {Eaddress !== "" && (
+            <Text style={styles.leftColumnContent}>Email:</Text>
+            )}
+            <Text style={styles.leftColumnContent}>{Eaddress} </Text>
+              {skills.some(skill => skill !== "")&& (
+                 <Text style={styles.leftColumnTitle}>Skills</Text>
+              )}
+              
             <View style={styles.listItem}>
               {skills.map((s, index) => (
                 <Text key={index} style={styles.listItemContent}>• {s}</Text>
@@ -83,22 +94,26 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
           </View>
           <View style={styles.rightColumn}>
             <Text style={styles.header}>{firstName} {lastName}</Text>
-            <Text style={styles.subHeader}>AboutMe : </Text>
+            {aboutMe !== "" && (
+              <Text style={styles.subHeader}>AboutMe : </Text>
+            )}
             <Text style={styles.content}>{aboutMe}</Text>
-
+            {school !== ""||Schooldescription !== "" ||degree!== "" ||dateG !==""? (
             <Text style={styles.subHeader}>Education</Text>
-            <Text style={styles.content}>Institution: {school}</Text>
+            ):null}
+            <Text style={styles.content}>{school}</Text>
             <Text style={styles.content}>{Schooldescription}</Text>
-            <Text style={styles.content}>Degree: {degree}</Text>
-            <Text style={styles.content}>Year: {dateG}</Text>
-
-            <Text style={styles.subHeader}>Work Experience</Text>
-            {/* {projects.map((p,index) => (
+            <Text style={styles.content}>{degree}</Text>
+            <Text style={styles.content}>{dateG}</Text>
+            {projects.some(p => p.name !== "" || p.description !== "") && (
+              <Text style={styles.subHeader}>Work Experience</Text>
+            )}
+            {projects.map((p,index) => (
               <p key={index}>
                 <Text style={styles.content}>{p.name}</Text>
                 <Text style={styles.content}> {p.description}</Text>
               </p>
-            ))} */}
+            ))}
           </View>
         </View>
       </Page>
