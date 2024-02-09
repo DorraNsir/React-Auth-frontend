@@ -1,20 +1,26 @@
 // FormComponent.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MyDocument from './MyDocument';
 import { PDFViewer } from '@react-pdf/renderer';
-import { useMemo } from 'react';
 import { CgAddR } from "react-icons/cg";
+import ColorPicker from '../ColorPicker';
 
 
 const FormComponent = ({projects, ProjectDescription,projectName, skills, skill,degree,dateG,Schooldescription,school,aboutMe,firstName, lastName, phoneN, Eaddress, onFirstNameChange,
    onLastNameChange, handlePhoneChange, handleEaddressChange,handleaboutMeChange,
    handleschoolChange,handlelDescriptionChange,handlelDegreeChange,handlelDateGChange,
    handlelSkillChange,handleAddSkill,handlelProjectDescriptionChange,handlelprojectNameChange ,handleAddProject}) => {
-
+    
+    const [color, setColor] = useState("#000000");
+    const handleColorChange = (Ncolor) => {
+      setColor(Ncolor)
+    };
   return (
     <div className='flex w-screen m-auto p-2  '>
       <div className="w-1/2 px-3 ">
         
+      <ColorPicker onColorChange={handleColorChange}/>
+        {/* **************************** */}
       <div className=" px-6 p- bg-white relative justify-center items-center w-1/2  mx-auto h-1/4 sm:h-1/4 md:w-1/4 md:h-1/4 lg:w-full lg:  lg:h-1/4 rounded-3xl filter drop-shadow-2xl"> 
   <div className="mt-3  sm:mt-5">
     <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black py-2">
@@ -189,7 +195,7 @@ const FormComponent = ({projects, ProjectDescription,projectName, skills, skill,
         <PDFViewer style={{width: '100vh',height: '100vh',border: '2px solid #bbb1b1',borderRadius: '8px',}}>
           <MyDocument firstName={firstName} lastName={lastName} Eaddress={Eaddress} phoneN={phoneN} dateG={dateG} 
           degree={degree} Schooldescription={Schooldescription} school={school} aboutMe={aboutMe}
-          skills={skills} skill={skill} projectName={projectName} ProjectDescription={ProjectDescription} projects={projects}
+          skills={skills} skill={skill} projectName={projectName} ProjectDescription={ProjectDescription} projects={projects} color={color}
            />
         </PDFViewer>
 
