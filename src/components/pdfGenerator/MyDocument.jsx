@@ -45,7 +45,7 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
       fontSize: 13,
       fontWeight: 'bold',
       marginBottom: 8,
-      color: color, // Use the color prop here
+      color: '#ffffff', // Use the color prop here
     },
     leftColumnContent: {
       fontSize: 10,
@@ -79,6 +79,7 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
                 <Text key={index} style={styles.listItemContent}>• {s}</Text>
               ))}
             </View>
+
           </View>
           <View style={styles.rightColumn}>
             <Text style={styles.header}>{firstName} {lastName}</Text>
@@ -92,12 +93,12 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
             <Text style={styles.content}>Year: {dateG}</Text>
 
             <Text style={styles.subHeader}>Work Experience</Text>
-            {projects.map((p,index) => (
+            {/* {projects.map((p,index) => (
               <p key={index}>
                 <Text style={styles.content}>{p.name}</Text>
                 <Text style={styles.content}> {p.description}</Text>
               </p>
-            ))}
+            ))} */}
           </View>
         </View>
       </Page>

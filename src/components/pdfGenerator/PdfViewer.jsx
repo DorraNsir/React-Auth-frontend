@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import FormComponent from './FormComponent'
-import MyDocument from './MyDocument';
-import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
 
@@ -16,40 +14,7 @@ const PdfViewer= React.memo(()=> {
   const [Schooldescription, setSchooldescription] = useState('');
   const [degree, setDegree] = useState('');
   const [dateG, setDateG] = useState('');
-  const[skill,setSkill]=useState('');
-  const [skills, setSkills] = useState([]);
-  const[ProjectDescription,setProjectDescription]=useState('')
-  const[projectName,setProjectName]=useState('')
-  const[projects,setProjects]=useState([
-    {
-      name:'',
-      description:'',
-    }
-  ])
-  const handleAddProject = () => {
-    if (projectName.trim() !== "" && ProjectDescription.trim() !== "") { 
-      const newProject = { name: projectName, description: ProjectDescription };
-      setProjects([...projects, newProject]); 
-      setProjectName('');
-      setProjectDescription(''); 
-    }
-  };
 
-  const handleAddSkill = () => {
-    if (skill.trim() !== "") { // Check if the skill is not empty
-      setSkills([...skills, skill]); // Add the skill to the list of skills
-      setSkill(''); // Clear the input field
-    }
-  };
-  const handlelprojectNameChange = (e) => {
-    setProjectName(e.target.value);
-  };
-  const handlelProjectDescriptionChange = (e) => {
-    setProjectDescription(e.target.value);
-  };
-  const handlelSkillChange = (e) => {
-    setSkill(e.target.value);
-  };
   const handlelDegreeChange = (e) => {
     setDegree(e.target.value);
   };
@@ -109,11 +74,6 @@ const PdfViewer= React.memo(()=> {
           school={school}
           degree={degree}
           dateG={dateG}
-          skill={skill}
-          skills={skills}
-          projectName={projectName}
-          projects={projects}
-          ProjectDescription={ProjectDescription}
           Schooldescription={Schooldescription}
           onFirstNameChange={handleFirstNameChange}
           onLastNameChange={handleLastNameChange}
@@ -124,17 +84,10 @@ const PdfViewer= React.memo(()=> {
           handlelDescriptionChange={handlelDescriptionChange}
           handlelDegreeChange={handlelDegreeChange}
           handlelDateGChange={handlelDateGChange}
-          handlelSkillChange={handlelSkillChange}
-          handleAddSkill={handleAddSkill}
-          handlelProjectDescriptionChange ={handlelProjectDescriptionChange }
-          handlelprojectNameChange={handlelprojectNameChange}
-          handleAddProject={handleAddProject}
+
           // Add more event handlers as needed
         />
       </div>
-      {/* <PDFDownloadLink document={<MyDocument firstName={firstName} lastName={lastName} phoneN={phoneN} address={Eaddress}/>} fileName='myResume'>
-        Download a PDF
-      </PDFDownloadLink> */}
     </div>
   )
 })
