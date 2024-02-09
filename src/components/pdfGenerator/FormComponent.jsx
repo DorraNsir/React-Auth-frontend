@@ -5,14 +5,30 @@ import { PDFViewer } from '@react-pdf/renderer';
 import { IoAddOutline } from "react-icons/io5";
 import ColorPicker from '../ColorPicker';
 import { MdDeleteForever } from "react-icons/md";
-// import PopupDelete from '../PopupDelete';
+import PopupDelete from '../PoppupDelete';
+
 
 const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName, lastName, phoneN, Eaddress, onFirstNameChange,
    onLastNameChange, handlePhoneChange, handleEaddressChange,handleaboutMeChange,
    handleschoolChange,handlelDescriptionChange,handlelDegreeChange,handlelDateGChange}) => {
-    
+    const [mode,seteMode]=useState('')
+    const [indexProject,setIndexProject]=useState('')
+    const[indexSkill,setIndexSkill]=useState(0)
+    const [popup,setPopup]=useState(false)
     const [color, setColor] = useState("#7c6ed5");
     const [skills, setSkills] = useState([""]);
+
+    const showPopup=(index)=>{
+      setIndexSkill(index)
+      setPopup(true)
+      seteMode('skills')
+    }
+    const showPopupProject=(index)=>{
+      setIndexProject(index)
+      setPopup(true)
+      seteMode('projects')
+    }
+
     const[projects,setProjects]=useState([
       {
         name:'',
@@ -41,7 +57,9 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
       Projects.splice(index, 1);
       // Update the state with the modified Inputs array
       setProjects(Projects)
+      setPopup(false)
     }
+
     const deleteInputSkills = (index) => {
       // Make a copy of the inputs array
       const Skills = [...skills];
@@ -49,7 +67,8 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
       Skills.splice(index, 1);
       // Update the state with the modified Inputs array
       setSkills(Skills);
-
+      setPopup(false)
+      
     }
     const addInputSkills = () => {
       setSkills([...skills, '']);
@@ -64,6 +83,10 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
       setColor(Ncolor)
     };
   return (
+    <>
+    {popup &&(<PopupDelete deleteInputProjects={deleteInputProjects} indexProject= {indexProject} deleteInputSkills={deleteInputSkills} setPopup={setPopup} indexSkill={indexSkill}  mode={mode}/> )
+    }
+    
     <div className='flex w-screen m-auto p-2  '>
       <div className="w-1/2 px-3 ">
         
@@ -192,7 +215,7 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
             Add skills
           </label>
           <div className='flex items-end justify-end'>
-            <MdDeleteForever onClick={()=>deleteInputSkills(index)} className='relative top-5 cursor-pointer hover:bg-red-400' />
+            <MdDeleteForever onClick={()=>showPopup(index)} className='relative top-5 cursor-pointer hover:bg-red-400' />
             </div> 
           <input  name="lastname" type="text"
           value={input} onChange={(e)=>handleSkillsChange(index, e.target.value)}
@@ -227,7 +250,8 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
         Project name
       </label>
       <div className='flex items-end justify-end'>
-            <MdDeleteForever onClick={()=>deleteInputProjects(index)} className='relative top-5 cursor-pointer hover:bg-red-400' />
+            <MdDeleteForever onClick={()=>showPopupProject(index)} className='relative top-5 cursor-pointer hover:bg-red-400' />
+              
       </div> 
       <input name="lastname" type="text"
       value={input.name} onChange={(e)=>handleProjectNameChange(index,e.target.value)}
@@ -262,8 +286,9 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
         
   </div>  
   </div> 
-  {/* <PopupDelete/> */}
+
     </div>
+    </>
   );
 
 };

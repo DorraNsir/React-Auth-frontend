@@ -8,6 +8,8 @@ import LandingPage from './pages/LandingPage';
 import Footer from './components/Footer';
 import PdfViewer from './components/pdfGenerator/PdfViewer';
 import TemplatesPage from './pages/TemplatesPage';
+import MyDocument from './components/pdfGenerator/MyDocument';
+import PopupDelete from './components/PoppupDelete';
 
 // const routes=useRoutes([
 //   {
@@ -30,6 +32,8 @@ function App() {
               <Route path='/register' element={<Register/>}/>
               <Route path='/pdfViewer' element={<PdfViewer/> }/>
               <Route path='/templates' element={<TemplatesPage/> }/>
+              <Route path='/doc' element={<PopupDelete/> }/>
+
               
           </Routes>
         
