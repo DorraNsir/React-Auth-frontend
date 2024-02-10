@@ -1,97 +1,29 @@
 // FormComponent.js
 import React, { useState } from 'react';
 import MyDocument from './MyDocument';
-import { PDFViewer } from '@react-pdf/renderer';
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import { IoAddOutline } from "react-icons/io5";
 import ColorPicker from '../ColorPicker';
 import { MdDeleteForever } from "react-icons/md";
 import PopupDelete from '../PoppupDelete';
 
 
-const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName, lastName, phoneN, Eaddress, onFirstNameChange,
-   onLastNameChange, handlePhoneChange, handleEaddressChange,handleaboutMeChange,
-   handleschoolChange,handlelDescriptionChange,handlelDegreeChange,handlelDateGChange}) => {
-    const [mode,seteMode]=useState('')
-    const [indexProject,setIndexProject]=useState('')
-    const[indexSkill,setIndexSkill]=useState(0)
-    const [popup,setPopup]=useState(false)
-    const [color, setColor] = useState("#7c6ed5");
-    const [skills, setSkills] = useState([""]);
 
-    const showPopup=(index)=>{
-      setIndexSkill(index)
-      setPopup(true)
-      seteMode('skills')
-    }
-    const showPopupProject=(index)=>{
-      setIndexProject(index)
-      setPopup(true)
-      seteMode('projects')
-    }
-
-    const[projects,setProjects]=useState([
-      {
-        name:'',
-        description:'',
-      }
-    ])
-    const addInputProjucts = () => {
-      const newProject = { name: "", description: "" };
-      setProjects([...projects, newProject]);
-    };
-    const handleProjectNameChange = (index, value) => {
-      const newProject=[...projects]
-      newProject[index]={...newProject[index], name: value };
-        setProjects(newProject); 
-        console.log(projects)
-    };
-    const handleProjectDescriptionChange = (index, value) => {
-      const newProject=[...projects]
-      newProject[index]={...newProject[index], description: value };
-        setProjects(newProject); 
-    };
-    const deleteInputProjects = (index) => {
-      // Make a copy of the inputs array
-      const Projects = [...projects];
-      // Remove the item at the specified index using splice
-      Projects.splice(index, 1);
-      // Update the state with the modified Inputs array
-      setProjects(Projects)
-      setPopup(false)
-    }
-
-    const deleteInputSkills = (index) => {
-      // Make a copy of the inputs array
-      const Skills = [...skills];
-      // Remove the item at the specified index using splice
-      Skills.splice(index, 1);
-      // Update the state with the modified Inputs array
-      setSkills(Skills);
-      setPopup(false)
-      
-    }
-    const addInputSkills = () => {
-      setSkills([...skills, '']);
-    };
-    const handleSkillsChange = (index, value) => {
-      const newSkills = [...skills];
-      newSkills[index] = value;
-      setSkills(newSkills); 
-      console.log("lenghth",skills.length) 
-    };
-    const handleColorChange = (Ncolor) => {
-      setColor(Ncolor)
-    };
+const FormComponent = ({skills,projects,degree,dateG,Schooldescription,school,aboutMe,firstName, lastName, phoneN, Eaddress, onFirstNameChange,
+   onLastNameChange,setPopup, handlePhoneChange, handleEaddressChange,handleaboutMeChange,addInputSkills,handleSkillsChange,handleColorChange ,deleteInputSkills,
+   deleteInputProjects,handleProjectDescriptionChange,handleProjectNameChange,addInputProjucts,showPopupProject,showPopup,
+   handleschoolChange,handlelDescriptionChange,handlelDegreeChange,handlelDateGChange,mode,indexProject,indexSkill,popup,color}) => {
   return (
     <>
     {popup &&(<PopupDelete deleteInputProjects={deleteInputProjects} indexProject= {indexProject} deleteInputSkills={deleteInputSkills} setPopup={setPopup} indexSkill={indexSkill}  mode={mode}/> )
     }
     
+
     <div className='flex w-screen m-auto p-2  '>
       <div className="w-1/2 px-3 ">
-        
+      
       <ColorPicker onColorChange={handleColorChange}/>
-        {/* **************************** */}
+        {/* ************ Personal Details**************** */}
       <div className=" px-6 p- bg-white relative justify-center items-center w-1/2  mx-auto h-1/4 sm:h-1/4 md:w-1/4 md:h-1/4 lg:w-full lg:  lg:h-auto rounded-3xl filter drop-shadow-2xl"> 
   <div className="mt-3  sm:mt-5">
     <h1 className="text-xl text-gray-600 tracking-wider text-sm sm:text-md font-black py-2">
@@ -274,18 +206,43 @@ const FormComponent = ({degree,dateG,Schooldescription,school,aboutMe,firstName,
 </div>
 </div>
 
-    <div className=" preview flex   w-1/2 overflow-hidden ">
-    
-        <div className="preview  fixed  ">
-        <PDFViewer style={{width: '100vh',height: '100vh',border: '2px solid #bbb1b1',borderRadius: '8px',}}>
-          <MyDocument firstName={firstName} lastName={lastName} Eaddress={Eaddress} phoneN={phoneN} dateG={dateG} 
-          degree={degree} Schooldescription={Schooldescription} school={school} aboutMe={aboutMe} 
-          skills={skills}  color={color} projects={projects} />
-        </PDFViewer>
 
-        
-  </div>  
-  </div> 
+<div className="preview flex w-1/2 overflow-hidden">
+  <div className="preview fixed">
+    {/* <PDFDownloadLink document={<MyDocument />} fileName="resume.pdf">
+      {({ blob, url, loading, error }) =>
+        loading ? 'Loading document...' : 'Download'
+      } 
+      download
+    </PDFDownloadLink> */}
+
+    <PDFViewer
+      style={{
+        width: '100vh',
+        height: '100vh',
+        border: '2px solid #bbb1b1',
+        borderRadius: '8px'
+      }}
+      // showToolbar={false}
+      
+    >
+      <MyDocument
+        firstName={firstName}
+        lastName={lastName}
+        Eaddress={Eaddress}
+        phoneN={phoneN}
+        dateG={dateG}
+        degree={degree}
+        Schooldescription={Schooldescription}
+        school={school}
+        aboutMe={aboutMe}
+        skills={skills}
+        color={color}
+        projects={projects}
+      />
+    </PDFViewer>
+  </div>
+</div>
 
     </div>
     </>

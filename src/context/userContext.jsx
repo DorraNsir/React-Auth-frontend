@@ -6,6 +6,7 @@ export const UserContext = createContext()
 export const UserProvider = ({ children }) => {
     const [name,setName]=useState('');
     const [lastname,setLastname]=useState('');
+    const [idUser,setIdUser]=useState('');
 
 
     useEffect(()=>{
@@ -20,6 +21,7 @@ export const UserProvider = ({ children }) => {
               const content = await respose.json();
               setName(content.name);
               setLastname(content.lastname)
+              setIdUser(content.id)
         } 
   
       )();
@@ -27,7 +29,7 @@ export const UserProvider = ({ children }) => {
    
   
     return (
-        <UserContext.Provider value={{ name,setName,lastname }} >
+        <UserContext.Provider value={{ name,setName,lastname,idUser }} >
           {children}
         </UserContext.Provider>
       )

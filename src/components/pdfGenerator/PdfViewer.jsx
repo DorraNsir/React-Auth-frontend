@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState , useContext,useEffect} from 'react'
+import { UserContext } from '../../context/userContext'
 import FormComponent from './FormComponent'
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
 
-const PdfViewer= React.memo(()=> {
 
+
+
+
+const PdfViewer= React.memo(()=> {
+ 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneN, setPhoneN] = useState('');
@@ -14,6 +19,133 @@ const PdfViewer= React.memo(()=> {
   const [Schooldescription, setSchooldescription] = useState('');
   const [degree, setDegree] = useState('');
   const [dateG, setDateG] = useState('');
+  const [mode,seteMode]=useState('')
+  const [indexProject,setIndexProject]=useState('')
+  const[indexSkill,setIndexSkill]=useState(0)
+  const [popup,setPopup]=useState(false)
+  const [color, setColor] = useState("#7c6ed5");
+  const [skills, setSkills] = useState([""]);
+  const[projects,setProjects]=useState([
+    {
+      name:'',
+      description:'',
+    }
+  ])
+  const {idUser } = useContext(UserContext)
+  // Function to handle form submission and update CV
+  useEffect(() => {
+const updateCV = async (e) => {
+  // e.preventDefault();
+  const cvData = {
+    Name:           firstName,
+    LastName:       lastName,
+    Email:          Eaddress,
+    Phone:          phoneN,
+    AboutMe:        aboutMe,
+    Color:          color,
+      education: {
+          school: school,
+          degree: degree,
+          year: dateG,
+          description: Schooldescription
+      },
+      WorkExperience:{
+				ProjectName: projects.name,
+				Description:projects.description,
+			},
+			Skills:{
+				SkillName:skills,
+			},
+      // Add other fields of CV as needed
+  };
+  try {
+      const response = await fetch(`http://localhost:8000/api/cv/${idUser}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(cvData)
+      });
+
+      if (response.ok) {
+          // CV updated successfully
+          console.log('CV updated successfully');
+          console.log(cvData)
+      } else {
+          // Handle error
+          console.error('Failed to update CV');
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
+};
+updateCV ();
+}, [firstName, Eaddress, Schooldescription, aboutMe, color, dateG, degree, idUser, lastName,
+ phoneN, projects.description, projects.name, school, skills]);
+
+// Call the updateCV function when needed, e.g., on form submission
+// const handleSubmit = (e) => {
+  
+//   updateCV();
+// };
+
+  const showPopup=(index)=>{
+    setIndexSkill(index)
+    setPopup(true)
+    seteMode('skills')
+  }
+  const showPopupProject=(index)=>{
+    setIndexProject(index)
+    setPopup(true)
+    seteMode('projects')
+  }
+  const addInputProjucts = () => {
+    const newProject = { name: "", description: "" };
+    setProjects([...projects, newProject]);
+  };
+  const handleProjectNameChange = (index, value) => {
+    const newProject=[...projects]
+    newProject[index]={...newProject[index], name: value };
+      setProjects(newProject); 
+      console.log(projects)
+  };
+  const handleProjectDescriptionChange = (index, value) => {
+    const newProject=[...projects]
+    newProject[index]={...newProject[index], description: value };
+      setProjects(newProject); 
+  };
+  const deleteInputProjects = (index) => {
+    // Make a copy of the inputs array
+    const Projects = [...projects];
+    // Remove the item at the specified index using splice
+    Projects.splice(index, 1);
+    // Update the state with the modified Inputs array
+    setProjects(Projects)
+    setPopup(false)
+  }
+
+  const deleteInputSkills = (index) => {
+    // Make a copy of the inputs array
+    const Skills = [...skills];
+    // Remove the item at the specified index using splice
+    Skills.splice(index, 1);
+    // Update the state with the modified Inputs array
+    setSkills(Skills);
+    setPopup(false)
+    
+  }
+  const addInputSkills = () => {
+    setSkills([...skills, '']);
+  };
+  const handleSkillsChange = (index, value) => {
+    const newSkills = [...skills];
+    newSkills[index] = value;
+    setSkills(newSkills); 
+    console.log("lenghth",skills.length) 
+  };
+  const handleColorChange = (Ncolor) => {
+    setColor(Ncolor)
+  };
 
   const handlelDegreeChange = (e) => {
     setDegree(e.target.value);
@@ -32,6 +164,8 @@ const PdfViewer= React.memo(()=> {
   };
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
+    
+    
   };
 
   const handleLastNameChange = (e) => {
@@ -74,6 +208,13 @@ const PdfViewer= React.memo(()=> {
           school={school}
           degree={degree}
           dateG={dateG}
+          mode={mode}
+          indexProject={indexProject}
+          indexSkill={indexSkill}
+          popup={popup}
+          color={color}
+          skills={skills}
+          projects={projects}
           Schooldescription={Schooldescription}
           onFirstNameChange={handleFirstNameChange}
           onLastNameChange={handleLastNameChange}
@@ -84,11 +225,21 @@ const PdfViewer= React.memo(()=> {
           handlelDescriptionChange={handlelDescriptionChange}
           handlelDegreeChange={handlelDegreeChange}
           handlelDateGChange={handlelDateGChange}
-
-          // Add more event handlers as needed
+          addInputSkills={addInputSkills}
+          handleSkillsChange={handleSkillsChange}
+          handleColorChange ={handleColorChange }
+          deleteInputSkills={deleteInputSkills}
+          deleteInputProjects={deleteInputProjects}
+          handleProjectDescriptionChange={handleProjectDescriptionChange}
+          handleProjectNameChange={handleProjectNameChange}
+          addInputProjucts={addInputProjucts}
+          showPopupProject={showPopupProject}
+          showPopup={showPopup}
+          setPopup={setPopup}
         />
       </div>
-    </div>
+
+      </div>
   )
 })
 export default PdfViewer;

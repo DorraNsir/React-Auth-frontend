@@ -81,12 +81,12 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
             <Text style={styles.leftColumnContent}>Email:</Text>
             )}
             <Text style={styles.leftColumnContent}>{Eaddress} </Text>
-              {skills.some(skill => skill !== "")&& (
+              {skills&&skills.some(skill => skill !== "")&& (
                  <Text style={styles.leftColumnTitle}>Skills</Text>
               )}
               
             <View style={styles.listItem}>
-              {skills.map((s, index) => (
+              {skills&&skills.map((s, index) => (
                 <Text key={index} style={styles.listItemContent}>• {s}</Text>
               ))}
             </View>
@@ -105,10 +105,10 @@ const MyDocument = ({ firstName, lastName,Eaddress, phoneN, dateG,degree,Schoold
             <Text style={styles.content}>{Schooldescription}</Text>
             <Text style={styles.content}>{degree}</Text>
             <Text style={styles.content}>{dateG}</Text>
-            {projects.some(p => p.name !== "" || p.description !== "") && (
+            {projects&&projects.some(p => p.name !== "" || p.description !== "") && (
               <Text style={styles.subHeader}>Work Experience</Text>
             )}
-            {projects.map((p,index) => (
+            {projects&&projects.map((p,index) => (
               <p key={index}>
                 <Text style={styles.content}>{p.name}</Text>
                 <Text style={styles.content}> {p.description}</Text>

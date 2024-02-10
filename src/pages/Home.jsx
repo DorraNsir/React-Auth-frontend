@@ -5,7 +5,7 @@ import Nav from '../components/Nav'
 
 
 export default function Home() {
-  const { name,lastname } = useContext(UserContext)
+  const { name,lastname,idUser } = useContext(UserContext)
   
  
   
@@ -14,7 +14,7 @@ export default function Home() {
 
     <div>
       <Nav/>
-      {name?'Hi '+name +' '+lastname:'You ara not logged'}
+      {name?'Hi '+name +' '+lastname+idUser:'You ara not logged'}
     </div>
 
   )

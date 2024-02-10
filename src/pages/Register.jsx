@@ -11,6 +11,7 @@ export default function Register() {
     const handelNAmeChange=(e)=>{
         setName(e.target.value)
     }
+    
     const submit= async(e)=>{
         e.preventDefault();
         await fetch('http://localhost:8000/api/register',{
