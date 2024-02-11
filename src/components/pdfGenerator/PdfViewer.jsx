@@ -27,8 +27,8 @@ const PdfViewer= React.memo(()=> {
   const [skills, setSkills] = useState([""]);
   const[projects,setProjects]=useState([
     {
-      name:'',
-      description:'',
+      name:"",
+      description:"",
     }
   ])
   const {idUser } = useContext(UserContext)
@@ -36,31 +36,35 @@ const PdfViewer= React.memo(()=> {
   useEffect(() => {
 const updateCV = async (e) => {
   // e.preventDefault();
-  const cvData = {
-    Name:           firstName,
-    LastName:       lastName,
-    Email:          Eaddress,
-    Phone:          phoneN,
-    AboutMe:        aboutMe,
-    Color:          color,
-      education: {
-          school: school,
-          degree: degree,
-          year: dateG,
-          description: Schooldescription
-      },
-      WorkExperience:{
-				ProjectName: projects.name,
-				Description:projects.description,
-			},
-			Skills:{
-				SkillName:skills,
-			},
-      // Add other fields of CV as needed
-  };
   try {
+      const workExperience = projects.map((project) => ({
+        ProjectName: project.name,
+        Description: project.description,
+      }));
+      console.log("workExperience : ",workExperience)
+
+      const cvSkills = skills.map((skill) => ({ SkillName: skill }));
+      console.log("cvSkills : ",cvSkills)
+
+  const cvData = {
+    Name:     firstName,
+    LastName: lastName,
+    Email:    Eaddress,
+    Phone:    phoneN,
+    AboutMe:  aboutMe,
+    Color:    color,
+    Education: {
+      school: school,
+      degree: degree,
+      year:   dateG,
+      description: Schooldescription,
+    },
+    WorkExperience: workExperience,
+    Skills: cvSkills,
+    // Add other fields of CV as needed
+  };
       const response = await fetch(`http://localhost:8000/api/cv/${idUser}`, {
-          method: 'PUT',
+          method: 'PATCH',
           headers: {
               'Content-Type': 'application/json'
           },
@@ -81,7 +85,7 @@ const updateCV = async (e) => {
 };
 updateCV ();
 }, [firstName, Eaddress, Schooldescription, aboutMe, color, dateG, degree, idUser, lastName,
- phoneN, projects.description, projects.name, school, skills]);
+ phoneN,school, skills,projects]);
 
 // Call the updateCV function when needed, e.g., on form submission
 // const handleSubmit = (e) => {
@@ -152,6 +156,7 @@ updateCV ();
   };
   const handlelDateGChange = (e) => {
     setDateG(e.target.value);
+    console.log(dateG)
   };
   const handlelDescriptionChange = (e) => {
     setSchooldescription(e.target.value);
